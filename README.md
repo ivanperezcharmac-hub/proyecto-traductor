@@ -1,35 +1,34 @@
 # 🌐 Traductor en Tiempo Real
 
-App de traducción en tiempo real con modo texto y voz en vivo, construida con HTML/CSS/JS puro y la API de Anthropic.
+App de traducción en tiempo real con modo texto y voz en vivo. **100% gratis, sin API key, sin registro.**
 
 ## ✨ Features
 
-- **Modo Texto** — traducción automática mientras escribís (sin botón)
+- **Modo Texto** — traducción automática mientras escribís
 - **Modo Voz en Vivo** — micrófono continuo, ideal para entrevistas o reuniones
 - **Texto a voz** — escuchá la traducción en el idioma destino
 - **Modo oscuro / claro**
 - **9 idiomas** con detección automática del idioma de origen
 - **Historial de sesión**
+- **Contador de palabras diario**
 
 ## 🚀 Uso
 
-1. Abrí la app en [ivanperezcharmac-hub.github.io/proyecto-traductor](https://ivanperezcharmac-hub.github.io/proyecto-traductor)
-2. Ingresá tu API key de Anthropic (se guarda solo en tu navegador)
-3. Traducí
+Abrí la app en [ivanperezcharmac-hub.github.io/proyecto-traductor](https://ivanperezcharmac-hub.github.io/proyecto-traductor) y listo. Sin configuración.
 
-## 🔑 API Key
+## 🆓 API
 
-Obtené tu key en [console.anthropic.com/keys](https://console.anthropic.com/keys).  
-La key se almacena únicamente en `localStorage` de tu navegador. Nunca se envía a ningún servidor propio.
+Usa [MyMemory](https://mymemory.translated.net/) — la API de traducción pública más grande del mundo.
+- **Gratis:** 1000 palabras/día sin registro
+- Sin API key, sin tarjeta de crédito
 
 ## 🎙️ Voz en vivo
 
-Usa la Web Speech API del navegador. Funciona mejor en **Chrome** o **Edge**.  
-Para traducir lo que dice otra persona en una videollamada, usá auriculares y acercá el micrófono al parlante.
+Usa la Web Speech API del navegador. Funciona mejor en **Chrome** o **Edge**.
 
 ## 🛠️ Stack
 
-- HTML / CSS / JS puro (sin frameworks)
-- [Anthropic API](https://docs.anthropic.com) — modelo `claude-haiku-4-5`
-- Web Speech API (reconocimiento de voz nativo del navegador)
-- GitHub Pages (hosting)
+- HTML / CSS / JS puro (sin frameworks ni dependencias)
+- [MyMemory API](https://mymemory.translated.net/doc/spec.php) — traducción gratuita
+- Web Speech API — reconocimiento de voz nativo
+- GitHub Pages — hosting gratuito
