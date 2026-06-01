@@ -6,7 +6,7 @@
 <title>Traductor en Tiempo Real</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
+  :root{
     --bg:#f7f6f3;--white:#ffffff;--ink:#1a1a1a;--ink2:#555550;
     --ink3:#999990;--line:#e8e7e3;--green:#2d7a4f;--red:#c0392b;
     --blue:#2563a8;--radius:12px;
@@ -38,7 +38,7 @@
   .tab{padding:6px 16px;border:none;background:transparent;color:var(--ink3);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border-radius:6px;cursor:pointer;transition:all .15s;}
   .tab.active{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08);}
 
-  .lang-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .lang-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
   .lang-select{flex:1;background:var(--white);border:1px solid var(--line);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 28px 8px 12px;border-radius:8px;cursor:pointer;outline:none;transition:border-color .15s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
   .lang-select:focus{border-color:var(--ink2);}
   .swap-btn{width:32px;height:32px;border:1px solid var(--line);background:var(--white);border-radius:8px;cursor:pointer;color:var(--ink2);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
@@ -49,14 +49,12 @@
   .panel-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line);}
   .panel-label{font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:var(--ink3);}
   .panel-actions{display:flex;gap:4px;}
-
   .icon-btn{width:28px;height:28px;border:none;background:transparent;color:var(--ink3);border-radius:6px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
   .icon-btn:hover{background:var(--bg);color:var(--ink);}
   .icon-btn.speaking{color:var(--blue);background:rgba(37,99,168,.1);}
 
   textarea{flex:1;width:100%;min-height:200px;border:none;background:transparent;color:var(--ink);font-family:'DM Mono',monospace;font-size:14px;font-weight:300;line-height:1.7;padding:16px;resize:none;outline:none;transition:color .2s;}
   textarea::placeholder{color:var(--ink3);}
-
   .output-area{flex:1;min-height:200px;padding:16px;font-family:'DM Mono',monospace;font-size:14px;font-weight:300;line-height:1.7;color:var(--green);transition:color .2s;white-space:pre-wrap;}
   .char-count{padding:6px 16px;font-size:11px;color:var(--ink3);text-align:right;font-family:'DM Mono',monospace;border-top:1px solid var(--line);}
 
@@ -83,7 +81,6 @@
   .mic-label.live{color:var(--ink);display:flex;align-items:center;gap:6px;}
   .rec-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 1s ease-in-out infinite;}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-
   .voice-panels{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);}
   .voice-panel{background:var(--white);padding:16px;min-height:120px;transition:background .2s;}
   .voice-panel-label{font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;}
@@ -96,11 +93,7 @@
   .d:nth-child(2){animation-delay:.18s}.d:nth-child(3){animation-delay:.36s}
   @keyframes bounce{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1.1);opacity:1}}
 
-  .notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:var(--white);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink3);margin-bottom:24px;line-height:1.5;transition:background .2s;}
-
-  .limit-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--white);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink3);margin-bottom:16px;}
-  .limit-track{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden;}
-  .limit-fill{height:100%;background:var(--green);border-radius:2px;transition:width .3s;}
+  .notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:var(--white);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink3);margin-bottom:24px;line-height:1.5;}
 
   .history-section{display:none;}
   .history-section.visible{display:block;}
@@ -132,9 +125,9 @@
   <header>
     <h1>Traductor<sup>tiempo real</sup></h1>
     <div class="header-right">
-      <span class="badge">✦ Gratis</span>
+      <span class="badge">✦ Sin límites</span>
       <span class="theme-icon" id="themeIcon">☀️</span>
-      <button class="theme-toggle" onclick="toggleTheme()" title="Modo oscuro / claro"></button>
+      <button class="theme-toggle" onclick="toggleTheme()"></button>
       <div class="tabs">
         <button class="tab active" onclick="setMode('text')">Texto</button>
         <button class="tab" onclick="setMode('voice')">Voz en vivo</button>
@@ -144,7 +137,7 @@
 
   <div class="lang-row">
     <select class="lang-select" id="sourceLang">
-      <option value="autodetect">Detectar idioma</option>
+      <option value="auto">Detectar idioma</option>
       <option value="es">Español</option>
       <option value="en">Inglés</option>
       <option value="pt">Portugués</option>
@@ -154,7 +147,7 @@
       <option value="zh-CN">Chino</option>
       <option value="ja">Japonés</option>
     </select>
-    <button class="swap-btn" onclick="swapLangs()" title="Intercambiar">⇄</button>
+    <button class="swap-btn" onclick="swapLangs()">⇄</button>
     <select class="lang-select" id="targetLang">
       <option value="en">Inglés</option>
       <option value="es">Español</option>
@@ -167,19 +160,13 @@
     </select>
   </div>
 
-  <!-- Límite diario -->
-  <div class="limit-bar" id="limitBar">
-    <span id="limitLabel" style="white-space:nowrap">0 / 1000 palabras hoy</span>
-    <div class="limit-track"><div class="limit-fill" id="limitFill" style="width:0%"></div></div>
-  </div>
-
   <!-- TEXT MODE -->
   <div class="text-mode" id="textMode">
     <div class="panels">
       <div class="panel">
         <div class="panel-head">
           <span class="panel-label">Original</span>
-          <button class="icon-btn" onclick="clearInput()" title="Limpiar">✕</button>
+          <button class="icon-btn" onclick="clearInput()">✕</button>
         </div>
         <textarea id="inputText" placeholder="Escribí aquí y se traduce solo..."></textarea>
         <div class="char-count" id="charCount">0 caracteres</div>
@@ -188,8 +175,8 @@
         <div class="panel-head">
           <span class="panel-label">Traducción</span>
           <div class="panel-actions">
-            <button class="icon-btn" id="speakBtn" onclick="speakTranslation()" title="Escuchar">🔊</button>
-            <button class="icon-btn" onclick="copyTranslation()" title="Copiar">⎘</button>
+            <button class="icon-btn" id="speakBtn" onclick="speakTranslation()">🔊</button>
+            <button class="icon-btn" onclick="copyTranslation()">⎘</button>
           </div>
         </div>
         <div class="output-area" id="outputText">
@@ -225,8 +212,8 @@
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
             <div class="voice-panel-label" style="margin-bottom:0">Traducción</div>
             <div style="display:flex;gap:4px;">
-              <button class="icon-btn" id="voiceSpeakBtn" onclick="speakVoiceTranslation()" title="Escuchar">🔊</button>
-              <button class="icon-btn" onclick="copyVoiceTranslation()" title="Copiar">⎘</button>
+              <button class="icon-btn" id="voiceSpeakBtn" onclick="speakVoiceTranslation()">🔊</button>
+              <button class="icon-btn" onclick="copyVoiceTranslation()">⎘</button>
             </div>
           </div>
           <div class="voice-text translated" id="voiceTranslation">
@@ -246,15 +233,21 @@
     <div class="history-items" id="historyList"></div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// ── MyMemory API — 100% gratuita, sin API key ──
-const MYMEMORY = "https://api.mymemory.translated.net/get";
+// ── Google Translate — API no oficial, sin key, sin límite ──
+async function translate(text, src, tgt) {
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${src}&tl=${tgt}&dt=t&q=${encodeURIComponent(text)}`;
+  const res  = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  // La respuesta es un array anidado; concatenar todos los segmentos traducidos
+  return data[0].map(s => s[0]).filter(Boolean).join('');
+}
 
 const langNames = {
-  autodetect:'Auto', es:'Español', en:'Inglés', pt:'Portugués',
+  auto:'Auto', es:'Español', en:'Inglés', pt:'Portugués',
   fr:'Francés', de:'Alemán', it:'Italiano', 'zh-CN':'Chino', ja:'Japonés'
 };
 const langCodes = {
@@ -266,28 +259,6 @@ let hist=[], currentMode='text', isListening=false, recognition=null;
 let textTimer=null, voiceTimer=null, lastFinal='';
 let currentTrans='', currentVoiceTrans='', isSpeaking=false, isDark=false;
 
-// ── Contador de palabras diario (localStorage) ──
-const TODAY = new Date().toDateString();
-let wordCount = JSON.parse(localStorage.getItem('traductor_words') || '{"date":"","count":0}');
-if (wordCount.date !== TODAY) { wordCount = { date: TODAY, count: 0 }; }
-
-function countWords(text) { return text.trim().split(/\s+/).filter(Boolean).length; }
-
-function addWords(n) {
-  wordCount.count += n;
-  localStorage.setItem('traductor_words', JSON.stringify(wordCount));
-  updateLimitBar();
-}
-
-function updateLimitBar() {
-  const pct = Math.min((wordCount.count / 1000) * 100, 100);
-  document.getElementById('limitFill').style.width = pct + '%';
-  document.getElementById('limitLabel').textContent = `${wordCount.count} / 1000 palabras hoy`;
-  const fill = document.getElementById('limitFill');
-  fill.style.background = pct > 90 ? 'var(--red)' : pct > 70 ? '#e07b2a' : 'var(--green)';
-}
-updateLimitBar();
-
 // ── THEME ──
 function toggleTheme(){
   isDark=!isDark;
@@ -295,33 +266,17 @@ function toggleTheme(){
   document.getElementById('themeIcon').textContent=isDark?'🌙':'☀️';
 }
 
-// ── TRADUCCIÓN ──
-async function translate(text, src, tgt) {
-  const langpair = `${src}|${tgt}`;
-  const url = `${MYMEMORY}?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(langpair)}`;
-  const res  = await fetch(url);
-  const data = await res.json();
-  if (data.responseStatus !== 200 && data.responseStatus !== '200') {
-    throw new Error(data.responseDetails || 'Error de traducción');
-  }
-  return data.responseData.translatedText;
-}
-
 // ── TEXT MODE ──
-const inputEl   = document.getElementById('inputText');
-const statusBar = document.getElementById('statusBar');
-const statusText= document.getElementById('statusText');
-const outputEl  = document.getElementById('outputText');
+const inputEl   =document.getElementById('inputText');
+const statusBar =document.getElementById('statusBar');
+const statusText=document.getElementById('statusText');
+const outputEl  =document.getElementById('outputText');
 
-inputEl.addEventListener('input', () => {
+inputEl.addEventListener('input',()=>{
   const len=inputEl.value.length;
   document.getElementById('charCount').textContent=`${len} caracter${len!==1?'es':''}`;
   clearTimeout(textTimer);
-  if(len===0){
-    setStatus('');
-    outputEl.innerHTML='<span style="color:var(--ink3);font-style:italic;font-size:13px">Traducción automática...</span>';
-    currentTrans=''; return;
-  }
+  if(len===0){setStatus('');outputEl.innerHTML='<span style="color:var(--ink3);font-style:italic;font-size:13px">Traducción automática...</span>';currentTrans='';return;}
   if(len<2) return;
   setStatus('...');
   textTimer=setTimeout(doTranslate,400);
@@ -348,7 +303,6 @@ async function doTranslate(){
     const translated=await translate(input,src,tgt);
     outputEl.textContent=translated;
     currentTrans=translated;
-    addWords(countWords(input));
     setStatus('✓',false);
     setTimeout(()=>setStatus(''),1500);
     addHist(input,translated,src,tgt);
@@ -359,25 +313,20 @@ async function doTranslate(){
 }
 
 function clearInput(){
-  clearTimeout(textTimer); inputEl.value='';
+  clearTimeout(textTimer);inputEl.value='';
   document.getElementById('charCount').textContent='0 caracteres';
   outputEl.innerHTML='<span style="color:var(--ink3);font-style:italic;font-size:13px">Traducción automática...</span>';
-  currentTrans=''; setStatus('');
+  currentTrans='';setStatus('');
 }
-
-function copyTranslation(){
-  if(!currentTrans) return;
-  navigator.clipboard.writeText(currentTrans).then(()=>showToast('Copiado'));
-}
+function copyTranslation(){if(!currentTrans)return;navigator.clipboard.writeText(currentTrans).then(()=>showToast('Copiado'));}
 
 // ── TTS ──
-function speakTranslation(){ if(currentTrans) speak(currentTrans,document.getElementById('targetLang').value,document.getElementById('speakBtn')); }
-function speakVoiceTranslation(){ if(currentVoiceTrans) speak(currentVoiceTrans,document.getElementById('targetLang').value,document.getElementById('voiceSpeakBtn')); }
-
+function speakTranslation(){if(currentTrans) speak(currentTrans,document.getElementById('targetLang').value,document.getElementById('speakBtn'));}
+function speakVoiceTranslation(){if(currentVoiceTrans) speak(currentVoiceTrans,document.getElementById('targetLang').value,document.getElementById('voiceSpeakBtn'));}
 function speak(text,lang,btn){
   if(isSpeaking){window.speechSynthesis.cancel();isSpeaking=false;btn.classList.remove('speaking');btn.textContent='🔊';return;}
   const u=new SpeechSynthesisUtterance(text);
-  u.lang=langCodes[lang]||'en-US'; u.rate=0.95;
+  u.lang=langCodes[lang]||'en-US';u.rate=0.95;
   u.onstart=()=>{isSpeaking=true;btn.classList.add('speaking');btn.textContent='⏹';};
   u.onend=u.onerror=()=>{isSpeaking=false;btn.classList.remove('speaking');btn.textContent='🔊';};
   window.speechSynthesis.speak(u);
@@ -385,16 +334,13 @@ function speak(text,lang,btn){
 
 // ── VOICE MODE ──
 function toggleMic(){isListening?stopMic():startMic();}
-
 function startMic(){
-  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){
-    alert('Usá Chrome o Edge para el reconocimiento de voz.'); return;
-  }
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){alert('Usá Chrome o Edge.');return;}
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   recognition=new SR();
   const src=document.getElementById('sourceLang').value;
-  recognition.lang=src==='autodetect'?'es-ES':(langCodes[src]||'es-ES');
-  recognition.continuous=true; recognition.interimResults=true;
+  recognition.lang=src==='auto'?'es-ES':(langCodes[src]||'es-ES');
+  recognition.continuous=true;recognition.interimResults=true;
   let finalText='';
   recognition.onresult=e=>{
     let interim='';
@@ -403,30 +349,26 @@ function startMic(){
       if(e.results[i].isFinal){finalText+=t+' ';translateVoice(finalText.trim());}
       else interim+=t;
     }
-    document.getElementById('voiceTranscript').innerHTML=
-      `<span>${escHtml(finalText)}</span><span class="interim-text">${escHtml(interim)}</span>`;
+    document.getElementById('voiceTranscript').innerHTML=`<span>${escHtml(finalText)}</span><span class="interim-text">${escHtml(interim)}</span>`;
   };
-  recognition.onerror=e=>{if(e.error!=='no-speech') stopMic();};
-  recognition.onend=()=>{if(isListening) recognition.start();};
-  recognition.start(); isListening=true;
+  recognition.onerror=e=>{if(e.error!=='no-speech')stopMic();};
+  recognition.onend=()=>{if(isListening)recognition.start();};
+  recognition.start();isListening=true;
   document.getElementById('micBtn').classList.add('on');
   document.getElementById('micBtn').textContent='⏹️';
   const lbl=document.getElementById('micLabel');
-  lbl.className='mic-label live'; lbl.innerHTML='<div class="rec-dot"></div> Escuchando...';
+  lbl.className='mic-label live';lbl.innerHTML='<div class="rec-dot"></div> Escuchando...';
   document.getElementById('voiceTranscript').innerHTML='<span style="color:var(--ink3);font-style:italic">Hablá ahora...</span>';
 }
-
 function stopMic(){
-  if(recognition) recognition.stop(); isListening=false;
+  if(recognition)recognition.stop();isListening=false;
   document.getElementById('micBtn').classList.remove('on');
   document.getElementById('micBtn').textContent='🎙️';
-  const lbl=document.getElementById('micLabel');
-  lbl.className='mic-label'; lbl.textContent='Presioná para empezar';
+  const lbl=document.getElementById('micLabel');lbl.className='mic-label';lbl.textContent='Presioná para empezar';
 }
-
 async function translateVoice(text){
-  if(!text||text===lastFinal) return;
-  lastFinal=text; clearTimeout(voiceTimer);
+  if(!text||text===lastFinal)return;
+  lastFinal=text;clearTimeout(voiceTimer);
   voiceTimer=setTimeout(async()=>{
     const src=document.getElementById('sourceLang').value;
     const tgt=document.getElementById('targetLang').value;
@@ -434,26 +376,21 @@ async function translateVoice(text){
     el.innerHTML='<div class="dots"><div class="d"></div><div class="d"></div><div class="d"></div></div>';
     try{
       const tr=await translate(text,src,tgt);
-      el.textContent=tr; currentVoiceTrans=tr;
-      addWords(countWords(text));
+      el.textContent=tr;currentVoiceTrans=tr;
       addHist(text,tr,src,tgt);
     }catch(e){
       el.innerHTML=`<span style="color:var(--red)">Error: ${escHtml(e.message)}</span>`;
     }
   },300);
 }
-
-function copyVoiceTranslation(){
-  if(!currentVoiceTrans) return;
-  navigator.clipboard.writeText(currentVoiceTrans).then(()=>showToast('Copiado'));
-}
+function copyVoiceTranslation(){if(!currentVoiceTrans)return;navigator.clipboard.writeText(currentVoiceTrans).then(()=>showToast('Copiado'));}
 
 // ── SWAP ──
 function swapLangs(){
   const sl=document.getElementById('sourceLang'),tl=document.getElementById('targetLang');
-  if(sl.value==='autodetect') return;
-  const tmp=sl.value; sl.value=tl.value; tl.value=tmp;
-  if(inputEl.value.trim()) doTranslate();
+  if(sl.value==='auto')return;
+  const tmp=sl.value;sl.value=tl.value;tl.value=tmp;
+  if(inputEl.value.trim())doTranslate();
 }
 
 // ── MODE ──
@@ -462,7 +399,7 @@ function setMode(mode){
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&mode==='text')||(i===1&&mode==='voice')));
   document.getElementById('textMode').classList.toggle('hidden',mode!=='text');
   document.getElementById('voiceMode').classList.toggle('active',mode==='voice');
-  if(mode!=='voice'&&isListening) stopMic();
+  if(mode!=='voice'&&isListening)stopMic();
 }
 
 // ── HISTORY ──
@@ -479,7 +416,6 @@ function renderHist(){
     </div>`).join('');
 }
 function clearHistory(){hist=[];renderHist();}
-
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
 </script>
