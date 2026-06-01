@@ -58,10 +58,22 @@
   .output-area{flex:1;min-height:200px;padding:16px;font-family:'DM Mono',monospace;font-size:14px;font-weight:300;line-height:1.7;color:var(--green);transition:color .2s;white-space:pre-wrap;}
   .char-count{padding:6px 16px;font-size:11px;color:var(--ink3);text-align:right;font-family:'DM Mono',monospace;border-top:1px solid var(--line);}
 
-  .refs-bar{display:none;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
-  .refs-label{font-size:11px;color:var(--ink3);font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:.5px;text-transform:uppercase;}
-  .ref-link{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--line);border-radius:20px;font-size:12px;color:var(--ink2);font-family:'DM Sans',sans-serif;font-weight:500;text-decoration:none;transition:all .15s;background:var(--white);}
-  .ref-link:hover{border-color:var(--ink2);color:var(--ink);background:var(--bg);}
+  /* Definition card */
+  .def-card{display:none;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px;animation:slideIn .25s ease;}
+  .def-top{display:flex;align-items:flex-start;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid var(--line);gap:12px;}
+  .def-word-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .def-word{font-size:19px;font-weight:500;letter-spacing:-.3px;color:var(--ink);}
+  .def-phonetic{font-size:13px;color:var(--ink3);font-family:'DM Mono',monospace;font-weight:300;}
+  .def-ext-links{display:flex;gap:6px;flex-shrink:0;}
+  .def-ext-link{font-size:11px;color:var(--ink3);text-decoration:none;padding:3px 8px;border:1px solid var(--line);border-radius:12px;transition:all .15s;white-space:nowrap;}
+  .def-ext-link:hover{color:var(--ink);border-color:var(--ink2);}
+  .def-meanings{padding:14px 20px;display:flex;flex-direction:column;gap:14px;}
+  .def-meaning{display:flex;flex-direction:column;gap:6px;}
+  .def-pos{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink3);}
+  .def-text{font-size:14px;line-height:1.6;color:var(--ink);}
+  .def-example{font-size:13px;color:var(--ink3);font-style:italic;line-height:1.5;padding-left:10px;border-left:2px solid var(--line);}
+  .def-synonyms{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
+  .def-syn{font-size:11px;padding:2px 8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;color:var(--ink2);font-family:'DM Mono',monospace;}
   .status-bar{display:flex;align-items:center;gap:8px;margin-bottom:32px;min-height:20px;}
   .status-text{font-size:12px;color:var(--ink3);font-family:'DM Mono',monospace;}
   .status-spinner{width:10px;height:10px;border:1.5px solid var(--line);border-top-color:var(--ink3);border-radius:50%;animation:spin .7s linear infinite;display:none;}
@@ -190,7 +202,19 @@
         </div>
       </div>
     </div>
-    <div class="refs-bar" id="refsBar"></div>
+    <div class="def-card" id="defCard">
+      <div class="def-top">
+        <div class="def-word-wrap">
+          <span class="def-word" id="defWord"></span>
+          <span class="def-phonetic" id="defPhonetic"></span>
+        </div>
+        <div class="def-ext-links">
+          <a class="def-ext-link" id="defCambLink" href="#" target="_blank" rel="noopener">Cambridge ↗</a>
+          <a class="def-ext-link" id="defOxfLink" href="#" target="_blank" rel="noopener">Oxford ↗</a>
+        </div>
+      </div>
+      <div class="def-meanings" id="defMeanings"></div>
+    </div>
     <div class="status-bar" id="statusBar">
       <div class="status-spinner"></div>
       <span class="status-text" id="statusText"></span>
@@ -316,7 +340,7 @@ async function doTranslate(){
     setStatus('✓',false);
     setTimeout(()=>setStatus(''),1500);
     addHist(input,translated,src,tgt);
-    showDictRefs(translated, tgt);
+    fetchAndShowDef(translated, tgt);
   }catch(e){
     outputEl.innerHTML=`<span style="color:var(--red);font-size:13px">Error: ${escHtml(e.message)}</span>`;
     setStatus('');
@@ -396,22 +420,59 @@ async function translateVoice(text){
 }
 function copyVoiceTranslation(){if(!currentVoiceTrans)return;navigator.clipboard.writeText(currentVoiceTrans).then(()=>showToast('Copiado'));}
 
-// ── DICT REFS ──
-function showDictRefs(text, tgt){
-  const bar=document.getElementById('refsBar');
-  if(tgt!=='en'||!text){bar.style.display='none';return;}
-  const words=text.trim().split(/\s+/);
-  if(words.length>5){bar.style.display='none';return;}
-  const q=encodeURIComponent(text.toLowerCase().trim());
-  bar.style.display='flex';
-  bar.innerHTML=`
-    <span style="font-size:11px;color:var(--ink3);font-weight:500;letter-spacing:.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;">Referencias</span>
-    <a class="ref-link" href="https://dictionary.cambridge.org/dictionary/english/${q}" target="_blank" rel="noopener">📖 Cambridge</a>
-    <a class="ref-link" href="https://www.oxfordlearnersdictionaries.com/definition/english/${q}" target="_blank" rel="noopener">📚 Oxford</a>
-  `;
+// ── DEFINITION CARD ──
+const DICT_API = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+
+async function fetchAndShowDef(translated, tgt) {
+  const card = document.getElementById('defCard');
+  if (tgt !== 'en' || !translated) { card.style.display = 'none'; return; }
+
+  const words = translated.trim().split(/\s+/);
+  if (words.length > 4) { card.style.display = 'none'; return; }
+
+  // Intentar con la frase completa, sino con la primera palabra
+  const lookup = words.length === 1 ? translated.trim().toLowerCase() : translated.trim().toLowerCase();
+
+  try {
+    let res = await fetch(DICT_API + encodeURIComponent(lookup));
+    // Si la frase no tiene resultado, probar solo primera palabra
+    if (!res.ok && words.length > 1) {
+      res = await fetch(DICT_API + encodeURIComponent(words[0].toLowerCase()));
+    }
+    if (!res.ok) { card.style.display = 'none'; return; }
+
+    const data = await res.json();
+    const entry = data[0];
+    const q = encodeURIComponent(entry.word);
+
+    document.getElementById('defWord').textContent = entry.word;
+    document.getElementById('defPhonetic').textContent = entry.phonetic || entry.phonetics?.find(p=>p.text)?.text || '';
+    document.getElementById('defCambLink').href = `https://dictionary.cambridge.org/dictionary/english/${q}`;
+    document.getElementById('defOxfLink').href  = `https://www.oxfordlearnersdictionaries.com/definition/english/${q}`;
+
+    const meaningsEl = document.getElementById('defMeanings');
+    // Mostrar hasta 2 partes del discurso, 1 definición cada una
+    const shown = entry.meanings.slice(0, 2);
+    meaningsEl.innerHTML = shown.map(m => {
+      const def  = m.definitions[0];
+      const syns = m.synonyms?.slice(0, 4) || [];
+      return `
+        <div class="def-meaning">
+          <span class="def-pos">${escHtml(m.partOfSpeech)}</span>
+          <span class="def-text">${escHtml(def.definition)}</span>
+          ${def.example ? `<span class="def-example">"${escHtml(def.example)}"</span>` : ''}
+          ${syns.length ? `<div class="def-synonyms">${syns.map(s=>`<span class="def-syn">${escHtml(s)}</span>`).join('')}</div>` : ''}
+        </div>`;
+    }).join('');
+
+    card.style.display = 'block';
+  } catch(e) {
+    card.style.display = 'none';
+  }
 }
+
 function hideDictRefs(){
-  document.getElementById('refsBar').style.display='none';
+  document.getElementById('defCard').style.display = 'none';
 }
 
 // ── SWAP ──
