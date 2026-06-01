@@ -146,6 +146,7 @@
       <option value="it">Italiano</option>
       <option value="zh-CN">Chino</option>
       <option value="ja">Japonés</option>
+      <option value="hu">Húngaro</option>
     </select>
     <button class="swap-btn" onclick="swapLangs()">⇄</button>
     <select class="lang-select" id="targetLang">
@@ -157,6 +158,7 @@
       <option value="it">Italiano</option>
       <option value="zh-CN">Chino</option>
       <option value="ja">Japonés</option>
+      <option value="hu">Húngaro</option>
     </select>
   </div>
 
@@ -248,11 +250,11 @@ async function translate(text, src, tgt) {
 
 const langNames = {
   auto:'Auto', es:'Español', en:'Inglés', pt:'Portugués',
-  fr:'Francés', de:'Alemán', it:'Italiano', 'zh-CN':'Chino', ja:'Japonés'
+  fr:'Francés', de:'Alemán', it:'Italiano', 'zh-CN':'Chino', ja:'Japonés', hu:'Húngaro'
 };
 const langCodes = {
   es:'es-ES', en:'en-US', pt:'pt-BR', fr:'fr-FR',
-  de:'de-DE', it:'it-IT', 'zh-CN':'zh-CN', ja:'ja-JP'
+  de:'de-DE', it:'it-IT', 'zh-CN':'zh-CN', ja:'ja-JP', hu:'hu-HU'
 };
 
 let hist=[], currentMode='text', isListening=false, recognition=null;
