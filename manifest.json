@@ -1,0 +1,19 @@
+{
+  "name": "Traductor en Tiempo Real",
+  "short_name": "Traductor",
+  "description": "Traducción automática con modo reunión y respuestas con IA",
+  "start_url": "/proyecto-traductor/",
+  "scope": "/proyecto-traductor/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f6f3",
+  "theme_color": "#1a1a1a",
+  "lang": "es",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Modo Reunión", "url": "/proyecto-traductor/#meeting", "description": "Abrir modo reunión directamente" }
+  ]
+}
